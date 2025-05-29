@@ -1,0 +1,8 @@
+//in progress
+justification cleaning {
+    conclusion c is "data are clean and consistent" //this is the end goal of this section
+}
+
+justification training {
+    conclusion c is "model is trained appropriately" //end goal
+}

@@ -1,0 +1,108 @@
+justification scraping {
+	conclusion c is "all data is available" //what our end goal is, we want the data to be usable
+
+	strategy stratx is "[and]" //what do we need to accomplish that?
+    
+	//left branch
+	sub-conclusion sc1 is "scraped data are correct" //we need to ensure we are scraping the correct data
+	strategy strat1 is "cross-analysis between nba.com and scraped website" //to check we will ensure the scraped data matches the official nba data
+	evidence ev1 is "basketball-reference.com matches NBA.com" //evidence proves official data matches scraped data
+
+	//right branch
+	sub-conclusion sc2 is "data collected in a legal way" //we need to ensure we are scraping ethically
+	strategy strat2 is "assessing terms of references" //to check we will ensure we comply with the TOR of basket...ref.com(scraped website)
+	evidence ev2 is "TOR from basketball-references.com" //evidence proves we comply with terms of reference of website
+
+	//supports
+	strat1 supports sc1
+	ev1 supports strat1
+
+	ev2 supports strat2
+	strat2 supports sc2
+
+	sc1 supports stratx
+	sc2 supports stratx
+
+	stratx supports c
+
+}
+
+justification parsing {
+	conclusion c is "data are ready for model training" //this is this is the end goal of this section
+
+	strategy stratx is "[and]" //parsing must meet multiple criteria
+
+	//left branch
+	sub-conclusion sc1 is "data are correctly structured" //we need to ensure our data is structured
+	strategy strat1 is "schema validation of parsed data" //to check we will make sure our parsed data matches the expected structure before we use it
+	evidence ev1 is "parsed data matches expected feature schema" //evidence proves it is
+
+	//middle branch
+	sub-conclusion sc2 is "data are clean and consistent" //we need to ensure our data is clean + consistent
+	strategy strat2 is "automated cleaning" //to check we will write a script to clean, then inspect ourselves
+	evidence ev2 is "no nulls or invalid types in key columns" //evidence proves all invalid types have been removed
+
+	//right branch
+	evidence ev3 is "all data is available"
+
+	//supports
+	strat1 supports sc1
+	ev1 supports strat1
+
+	strat2 supports sc2
+	ev2 supports strat2
+
+	ev3 supports strat1
+	ev3 supports strat2
+
+	sc1 supports stratx
+	sc2 supports stratx
+
+	stratx supports c
+}
+
+justification training {
+	conclusion c is "model is trained appropriately" //end goal
+
+	strategy stratx is "[and]" //what is required?
+
+	//first branch - data prep
+	
+	evidence ev1 is "data are ready for model training" //evidence proves data is ready for training
+
+	//second branch - suitable model
+	sub-conclusion sc2 is "model type is appropriate for problem and context" //we need to ensure model is justified
+	strategy strat2 is "use ridge regression with time series training" //to check we will use these methods of this model
+	evidence ev2 is "linear model fits numeric game data + trained sequentially over years" //evidence proves this model works for this scenario
+
+	//third branch - predictors used
+	sub-conclusion sc3 is "selected features improve model performance" //we need to ensure the correct features are used
+	strategy strat3 is "sequential feature selector applied to reduce 150 to 30" //to check we will use a sfs
+	evidence ev3 is "features chosen maximize accuracy incrementally (model improved accuracy from 55% to 63%)" //evidence proves the features used improved accuracy (winners predicted correctly)
+
+	//fourth branch - scope
+	sub-conclusion sc4 is "dataset size and scope are sufficient" //we need to ensure we are using enough data
+	strategy strat4 is "check average career and relevent player statistics" //to check we will use this amount initially
+	evidence ev4 is "dataset includes 7 seasons (8.2-year avg career); 150 initial features (e.g. fg%, pts)" //evidence proves this data follows the avg players career (approx. 1 era of basketball)
+
+	//supports
+
+	ev1 supports strat2
+	ev1 supports strat3
+	ev1 supports strat4
+
+	strat2 supports sc2
+	ev2 supports strat2
+
+	strat3 supports sc3
+	ev3 supports strat3
+
+	strat4 supports sc4
+	ev4 supports strat4
+
+	sc2 supports stratx
+	sc3 supports stratx
+	sc4 supports stratx
+
+	stratx supports c
+}
